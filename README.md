@@ -1,9 +1,9 @@
-# 📌 Sistema de Gerenciamento de Chamados
+#  Sistema de Gerenciamento de Chamados
 
 ## 📝 Descrição
 Este projeto implementa um sistema completo de abertura e gestão de chamados técnicos desenvolvido em Spring Boot com testes robustos utilizando JUnit 5 e Mockito. O sistema oferece uma API RESTful para criação, consulta, atualização e exclusão de chamados, com autenticação JWT e cobertura completa de testes unitários.
 
-## 🏗️ Arquitetura do Projeto
+##  Arquitetura do Projeto
 O projeto segue uma arquitetura em camadas com separação clara de responsabilidades e foco em testabilidade:
 
 Controller Layer
@@ -25,7 +25,7 @@ Test Layer
 - Testes de integração para endpoints REST
 - Mocks para isolamento de dependências
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 🔹 Backend
 Java 17
 Spring Boot 3.x (Web, Data JPA, Security, Test)
@@ -47,7 +47,7 @@ Spring Security - Autenticação e autorização
 JWT Tokens - Tokens de acesso stateless
 BCrypt - Criptografia de senhas
 
-## 🚀 Como Executar o Projeto
+##  Como Executar o Projeto
 🔹 Pré-requisitos
 - Java 17 ou superior
 - Maven 3.6+
@@ -114,7 +114,7 @@ curl -X DELETE http://localhost:8080/api/chamados/1 \
  -H "Authorization: Bearer SEU_TOKEN_JWT"
 ```
 
-## 🧪 Estrutura de Testes
+##  Estrutura de Testes
 
 # Testes de Service (ChamadoServiceTest)
 - Testes unitários puros com Mockito
@@ -135,12 +135,12 @@ curl -X DELETE http://localhost:8080/api/chamados/1 \
 - Atualização  deveAtualizarStatusChamado                 Altera status do chamado
 - Exclusão     deveDeletarChamadoExistente                Remove chamado com sucesso
 
-## 📊 Resultados dos Testes
+##  Resultados dos Testes
 Cobertura
- ✅ Service Layer: 100% dos métodos principais
- ✅ Controller Layer: Todos endpoints REST
- ✅ Business Logic: Regras de negócio validadas
- ✅ Error Handling: Cenários de erro cobertos
+ -  Service Layer: 100% dos métodos principais
+ -  Controller Layer: Todos endpoints REST
+ -  Business Logic: Regras de negócio validadas
+ -  Error Handling: Cenários de erro cobertos
 
 # Padrões de Teste
 - Arrange-Act-Assert (AAA)
@@ -148,7 +148,7 @@ Cobertura
 - Exception Testing
 - Independent Tests
 
-## 🔧 Configurações
+##  Configurações
 - Banco de Dados H2
     URL: http://localhost:8080/h2-console
     JDBC URL: jdbc:h2:mem:chamadosdb
@@ -159,14 +159,14 @@ Cobertura
 
 Expiration: 86400000 (24 horas)
 
-## 🎯 Funcionalidades Principais
-   ✅ CRUD completo de chamados
-   ✅ Autenticação JWT
-   ✅ Testes unitários com JUnit 5 e Mockito
-   ✅ Validações de entrada
-   ✅ Tratamento de erros
-   ✅ Documentação de API via exemplos
-   ✅ Configuração para desenvolvimento e testes
+##  Funcionalidades Principais
+   -  CRUD completo de chamados
+   -  Autenticação JWT
+   -  Testes unitários com JUnit 5 e Mockito
+   -  Validações de entrada
+   -  Tratamento de erros
+   -  Documentação de API via exemplos
+   -  Configuração para desenvolvimento e testes
 
 ## 📁 Estrutura do Projeto
      src/
