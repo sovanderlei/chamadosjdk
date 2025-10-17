@@ -1,0 +1,5 @@
+package com.api.chamadosjdk.dto;
+
+public class ChamadoDTO {
+
+}

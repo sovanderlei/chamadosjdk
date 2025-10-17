@@ -1,0 +1,5 @@
+package com.api.chamadosjdk.model;
+
+public class StatusChamado {
+
+}

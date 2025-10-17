@@ -1,0 +1,28 @@
+spring.application.name=chamadosjdk
+server.port=8081
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.h2.console.enabled=true
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create-drop
+
+
+# Controle de logs do Hibernate
+logging.level.org.hibernate=ERROR
+logging.level.org.hibernate.orm=ERROR
+logging.level.org.hibernate.SQL=ERROR
+logging.level.org.hibernate.type=ERROR
+logging.level.org.hibernate.connections.pooling=ERROR
+
+# Logs do Spring Data JPA
+logging.level.org.springframework.data=WARN
+logging.level.org.springframework.transaction=WARN
+
+# Logs da aplicação
+logging.level.com.api.chamadosjdk=INFO
+
+
+# http://localhost:8081/api/chamados
+# http://localhost:8081/actuator/health 

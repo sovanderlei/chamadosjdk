@@ -1,0 +1,5 @@
+package com.api.chamadosjdk.service;
+
+public class ChamadoService {
+
+}

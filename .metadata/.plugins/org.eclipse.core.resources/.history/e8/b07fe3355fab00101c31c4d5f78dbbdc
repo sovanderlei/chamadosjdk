@@ -1,0 +1,12 @@
+package com.api.chamadosjdk.repository;
+
+public class StatusChamado {
+
+	public enum StatusChamado {
+	    ABERTO,
+	    EM_ANDAMENTO,
+	    RESOLVIDO,
+	    FECHADO
+	}
+	
+}

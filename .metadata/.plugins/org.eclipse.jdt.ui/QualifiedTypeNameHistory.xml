@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.repository.ChamadoRepository"/>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.service.ChamadoService"/>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.model.Chamado"/>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.model.StatusChamado"/>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.repository.StatusChamado.EnumStatusChamado"/>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.Enums.EnumStatusChamado.StatusChamado"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.test.mock.mockito.MockBean"/>
+</qualifiedTypeNameHistroy>

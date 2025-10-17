@@ -1,0 +1,197 @@
+package com.api.chamadosjdk.controller;
+
+import com.api.chamadosjdk.model.Chamado;
+import com.api.chamadosjdk.service.ChamadoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(ChamadoController.class)
+@DisplayName("Testes do Controller de Chamados")
+class ChamadoControllerTest {
+    
+    @Autowired
+    private MockMvc mockMvc;
+    
+    @Mock
+    private ChamadoService chamadoService;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+    
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+    
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public ChamadoService chamadoService() {
+            return mock(ChamadoService.class);
+        }
+    }
+    
+    @Test
+    @DisplayName("Deve retornar lista de chamados")
+    void deveRetornarListaChamados() throws Exception {
+        // Arrange
+        Chamado chamado1 = new Chamado("Chamado 1", "Descrição 1", "Usuario 1");
+        chamado1.setId(1L);
+        Chamado chamado2 = new Chamado("Chamado 2", "Descrição 2", "Usuario 2");
+        chamado2.setId(2L);
+        
+        when(chamadoService.listarTodos()).thenReturn(Arrays.asList(chamado1, chamado2));
+        
+        // Act & Assert
+        mockMvc.perform(get("/api/chamados"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].titulo", is("Chamado 1")))
+                .andExpect(jsonPath("$[1].id", is(2)))
+                .andExpect(jsonPath("$[1].titulo", is("Chamado 2")));
+        
+        verify(chamadoService, times(1)).listarTodos();
+    }
+    
+    @Test
+    @DisplayName("Deve retornar chamado por ID existente")
+    void deveRetornarChamadoPorIdExistente() throws Exception {
+        // Arrange
+        Long id = 1L;
+        Chamado chamado = new Chamado("Chamado Teste", "Descrição Teste", "Test User");
+        chamado.setId(id);
+        
+        when(chamadoService.buscarPorId(id)).thenReturn(Optional.of(chamado));
+        
+        // Act & Assert
+        mockMvc.perform(get("/api/chamados/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.titulo", is("Chamado Teste")))
+                .andExpect(jsonPath("$.descricao", is("Descrição Teste")));
+        
+        verify(chamadoService, times(1)).buscarPorId(id);
+    }
+    
+    @Test
+    @DisplayName("Deve retornar 404 para chamado não encontrado")
+    void deveRetornar404ParaChamadoNaoEncontrado() throws Exception {
+        // Arrange
+        Long id = 999L;
+        when(chamadoService.buscarPorId(id)).thenReturn(Optional.empty());
+        
+        // Act & Assert
+        mockMvc.perform(get("/api/chamados/{id}", id))
+                .andExpect(status().isNotFound());
+        
+        verify(chamadoService, times(1)).buscarPorId(id);
+    }
+    
+    @Test
+    @DisplayName("Deve criar novo chamado com sucesso")
+    void deveCriarNovoChamado() throws Exception {
+        // Arrange
+        Chamado chamado = new Chamado("Novo Chamado", "Descrição do novo chamado", "Novo Usuario");
+        Chamado chamadoSalvo = new Chamado("Novo Chamado", "Descrição do novo chamado", "Novo Usuario");
+        chamadoSalvo.setId(1L);
+        chamadoSalvo.setDataAbertura(LocalDateTime.now());
+        
+        when(chamadoService.abrirChamado(any(Chamado.class))).thenReturn(chamadoSalvo);
+        
+        // Act & Assert
+        mockMvc.perform(post("/api/chamados")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(chamado)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.titulo", is("Novo Chamado")));
+        
+        verify(chamadoService, times(1)).abrirChamado(any(Chamado.class));
+    }
+    
+    @Test
+    @DisplayName("Deve atualizar status do chamado com sucesso")
+    void deveAtualizarStatusChamado() throws Exception {
+        // Arrange
+        Long id = 1L;
+        Chamado chamadoAtualizado = new Chamado("Chamado Teste", "Descrição", "Usuario");
+        chamadoAtualizado.setId(id);
+        
+        when(chamadoService.atualizarStatus(eq(id), any()))
+                .thenReturn(chamadoAtualizado);
+        
+        // Act & Assert
+        mockMvc.perform(put("/api/chamados/{id}/status", id)
+                .param("status", "EM_ANDAMENTO"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)));
+        
+        verify(chamadoService, times(1)).atualizarStatus(eq(id), any());
+    }
+    
+    @Test
+    @DisplayName("Deve retornar 404 ao tentar atualizar status de chamado inexistente")
+    void deveRetornar404AoAtualizarStatusChamadoInexistente() throws Exception {
+        // Arrange
+        Long id = 999L;
+        when(chamadoService.atualizarStatus(eq(id), any()))
+                .thenReturn(null);
+        
+        // Act & Assert
+        mockMvc.perform(put("/api/chamados/{id}/status", id)
+                .param("status", "EM_ANDAMENTO"))
+                .andExpect(status().isNotFound());
+        
+        verify(chamadoService, times(1)).atualizarStatus(eq(id), any());
+    }
+    
+    @Test
+    @DisplayName("Deve deletar chamado existente")
+    void deveDeletarChamadoExistente() throws Exception {
+        // Arrange
+        Long id = 1L;
+        when(chamadoService.deletarChamado(id)).thenReturn(true);
+        
+        // Act & Assert
+        mockMvc.perform(delete("/api/chamados/{id}", id))
+                .andExpect(status().isNoContent());
+        
+        verify(chamadoService, times(1)).deletarChamado(id);
+    }
+    
+    @Test
+    @DisplayName("Deve retornar 404 ao tentar deletar chamado inexistente")
+    void deveRetornar404AoDeletarChamadoInexistente() throws Exception {
+        // Arrange
+        Long id = 999L;
+        when(chamadoService.deletarChamado(id)).thenReturn(false);
+        
+        // Act & Assert
+        mockMvc.perform(delete("/api/chamados/{id}", id))
+                .andExpect(status().isNotFound());
+        
+        verify(chamadoService, times(1)).deletarChamado(id);
+    }
+}

@@ -1,0 +1,202 @@
+package com.api.chamadosjdk.service;
+ 
+
+import com.api.chamadosjdk.Enums.EnumStatusChamado.StatusChamado;
+import com.api.chamadosjdk.model.Chamado; 
+import com.api.chamadosjdk.repository.ChamadoRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("Testes do Serviço de Chamados")
+class ChamadoServiceTest {
+    
+    @Mock
+    private ChamadoRepository chamadoRepository;
+    
+    @InjectMocks
+    private ChamadoService chamadoService;
+    
+    @Test
+    @DisplayName("Deve abrir um novo chamado com sucesso")
+    void deveAbrirChamadoComSucesso() {
+        // Arrange
+        Chamado chamado = new Chamado("Problema no sistema", "Sistema não está respondendo", "João Silva");
+        Chamado chamadoSalvo = new Chamado("Problema no sistema", "Sistema não está respondendo", "João Silva");
+        chamadoSalvo.setId(1L);
+        chamadoSalvo.setStatus(StatusChamado.ABERTO);
+        
+        when(chamadoRepository.save(any(Chamado.class))).thenReturn(chamadoSalvo);
+        
+        // Act
+        Chamado resultado = chamadoService.abrirChamado(chamado);
+        
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(1L, resultado.getId());
+        assertEquals(StatusChamado.ABERTO, resultado.getStatus());
+        assertNotNull(resultado.getDataAbertura());
+        
+        verify(chamadoRepository, times(1)).save(chamado);
+    }
+    
+    @Test
+    @DisplayName("Deve listar todos os chamados")
+    void deveListarTodosChamados() {
+        // Arrange
+        Chamado chamado1 = new Chamado("Chamado 1", "Descrição 1", "Usuario 1");
+        chamado1.setId(1L);
+        Chamado chamado2 = new Chamado("Chamado 2", "Descrição 2", "Usuario 2");
+        chamado2.setId(2L);
+        
+        List<Chamado> chamados = Arrays.asList(chamado1, chamado2);
+        when(chamadoRepository.findAll()).thenReturn(chamados);
+        
+        // Act
+        List<Chamado> resultado = chamadoService.listarTodos();
+        
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(2, resultado.size());
+        verify(chamadoRepository, times(1)).findAll();
+    }
+    
+    @Test
+    @DisplayName("Deve buscar chamado por ID existente")
+    void deveBuscarChamadoPorIdExistente() {
+        // Arrange
+        Long id = 1L;
+        Chamado chamado = new Chamado("Chamado Teste", "Descrição Teste", "Test User");
+        chamado.setId(id);
+        
+        when(chamadoRepository.findById(id)).thenReturn(Optional.of(chamado));
+        
+        // Act
+        Optional<Chamado> resultado = chamadoService.buscarPorId(id);
+        
+        // Assert
+        assertTrue(resultado.isPresent());
+        assertEquals(id, resultado.get().getId());
+        verify(chamadoRepository, times(1)).findById(id);
+    }
+    
+    @Test
+    @DisplayName("Deve retornar vazio ao buscar chamado por ID inexistente")
+    void deveRetornarVazioParaIdInexistente() {
+        // Arrange
+        Long id = 999L;
+        when(chamadoRepository.findById(id)).thenReturn(Optional.empty());
+        
+        // Act
+        Optional<Chamado> resultado = chamadoService.buscarPorId(id);
+        
+        // Assert
+        assertFalse(resultado.isPresent());
+        verify(chamadoRepository, times(1)).findById(id);
+    }
+    
+    @Test
+    @DisplayName("Deve atualizar status do chamado com sucesso")
+    void deveAtualizarStatusComSucesso() {
+        // Arrange
+        Long id = 1L;
+        Chamado chamadoExistente = new Chamado("Chamado Teste", "Descrição", "Usuario");
+        chamadoExistente.setId(id);
+        chamadoExistente.setStatus(StatusChamado.ABERTO);
+        
+        when(chamadoRepository.findById(id)).thenReturn(Optional.of(chamadoExistente));
+        when(chamadoRepository.save(any(Chamado.class))).thenReturn(chamadoExistente);
+        
+        // Act
+        Chamado resultado = chamadoService.atualizarStatus(id, StatusChamado.EM_ANDAMENTO);
+        
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(StatusChamado.EM_ANDAMENTO, resultado.getStatus());
+        verify(chamadoRepository, times(1)).findById(id);
+        verify(chamadoRepository, times(1)).save(chamadoExistente);
+    }
+    
+    @Test
+    @DisplayName("Deve retornar null ao tentar atualizar status de chamado inexistente")
+    void deveRetornarNullAoAtualizarStatusChamadoInexistente() {
+        // Arrange
+        Long id = 999L;
+        when(chamadoRepository.findById(id)).thenReturn(Optional.empty());
+        
+        // Act
+        Chamado resultado = chamadoService.atualizarStatus(id, StatusChamado.EM_ANDAMENTO);
+        
+        // Assert
+        assertNull(resultado);
+        verify(chamadoRepository, times(1)).findById(id);
+        verify(chamadoRepository, never()).save(any(Chamado.class));
+    }
+    
+    @Test
+    @DisplayName("Deve definir data de fechamento ao fechar chamado")
+    void deveDefinirDataFechamentoAofecharChamado() {
+        // Arrange
+        Long id = 1L;
+        Chamado chamadoExistente = new Chamado("Chamado Teste", "Descrição", "Usuario");
+        chamadoExistente.setId(id);
+        chamadoExistente.setStatus(StatusChamado.EM_ANDAMENTO);
+        
+        when(chamadoRepository.findById(id)).thenReturn(Optional.of(chamadoExistente));
+        when(chamadoRepository.save(any(Chamado.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        
+        // Act
+        Chamado resultado = chamadoService.atualizarStatus(id, StatusChamado.FECHADO);
+        
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(StatusChamado.FECHADO, resultado.getStatus());
+        assertNotNull(resultado.getDataFechamento());
+        verify(chamadoRepository, times(1)).save(chamadoExistente);
+    }
+    
+    @Test
+    @DisplayName("Deve deletar chamado existente")
+    void deveDeletarChamadoExistente() {
+        // Arrange
+        Long id = 1L;
+        when(chamadoRepository.existsById(id)).thenReturn(true);
+        
+        // Act
+        boolean resultado = chamadoService.deletarChamado(id);
+        
+        // Assert
+        assertTrue(resultado);
+        verify(chamadoRepository, times(1)).existsById(id);
+        verify(chamadoRepository, times(1)).deleteById(id);
+    }
+    
+    @Test
+    @DisplayName("Deve retornar false ao tentar deletar chamado inexistente")
+    void deveRetornarFalseAoDeletarChamadoInexistente() {
+        // Arrange
+        Long id = 999L;
+        when(chamadoRepository.existsById(id)).thenReturn(false);
+        
+        // Act
+        boolean resultado = chamadoService.deletarChamado(id);
+        
+        // Assert
+        assertFalse(resultado);
+        verify(chamadoRepository, times(1)).existsById(id);
+        verify(chamadoRepository, never()).deleteById(id);
+    }
+}

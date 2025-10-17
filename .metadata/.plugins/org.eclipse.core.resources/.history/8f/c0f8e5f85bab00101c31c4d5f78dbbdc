@@ -1,0 +1,10 @@
+package com.api.chamadosjdk.model;
+
+public class StatusChamado {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

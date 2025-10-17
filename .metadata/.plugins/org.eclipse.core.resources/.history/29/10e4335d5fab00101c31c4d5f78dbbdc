@@ -1,0 +1,12 @@
+package com.api.chamadosjdk.Enums;
+
+public class StatusChamado {
+
+	public enum EnumStatusChamado {
+	    ABERTO,
+	    EM_ANDAMENTO,
+	    RESOLVIDO,
+	    FECHADO
+	}
+	
+}

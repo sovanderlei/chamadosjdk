@@ -1,0 +1,56 @@
+package com.api.chamadosjdk.service;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ChamadoService {
+    
+    @Autowired
+    private ChamadoRepository chamadoRepository;
+    
+    public List<Chamado> listarTodos() {
+        return chamadoRepository.findAll();
+    }
+    
+    public Optional<Chamado> buscarPorId(Long id) {
+        return chamadoRepository.findById(id);
+    }
+    
+    public Chamado abrirChamado(Chamado chamado) {
+        chamado.setStatus(StatusChamado.ABERTO);
+        chamado.setDataAbertura(LocalDateTime.now());
+        return chamadoRepository.save(chamado);
+    }
+    
+    public Chamado atualizarStatus(Long id, StatusChamado novoStatus) {
+        Optional<Chamado> chamadoOpt = chamadoRepository.findById(id);
+        if (chamadoOpt.isPresent()) {
+            Chamado chamado = chamadoOpt.get();
+            chamado.setStatus(novoStatus);
+            
+            if (novoStatus == StatusChamado.FECHADO) {
+                chamado.setDataFechamento(LocalDateTime.now());
+            }
+            
+            return chamadoRepository.save(chamado);
+        }
+        return null;
+    }
+    
+    public List<Chamado> buscarPorStatus(StatusChamado status) {
+        return chamadoRepository.findByStatus(status);
+    }
+    
+    public boolean deletarChamado(Long id) {
+        if (chamadoRepository.existsById(id)) {
+            chamadoRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+}
