@@ -1,0 +1,88 @@
+package com.api.chamadosjdk.service;
+ 
+import com.api.chamadosjdk.config.JwtProperties;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collections;
+import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@DisplayName("Testes do JwtService")
+class JwtServiceTest {
+
+    private JwtService jwtService;
+    private JwtProperties jwtProperties;
+
+    @BeforeEach
+    void setUp() {
+        jwtProperties = new JwtProperties();
+        jwtProperties.setSecret("mySecretKey12345678901234567890123456789012"); // 40+ chars
+        jwtProperties.setExpiration(86400000); // 24h
+
+        jwtService = new JwtService();
+        jwtService.jwtProperties = jwtProperties; // injeção manual (ou use ReflectionTestUtils)
+    }
+
+    @Test
+    @DisplayName("Deve gerar token JWT válido")
+    void deveGerarTokenValido() {
+        String username = "admin";
+        String token = jwtService.generateToken(username);
+
+        assertNotNull(token);
+        assertFalse(token.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Deve extrair username do token")
+    void deveExtrairUsernameDoToken() {
+        String username = "admin";
+        String token = jwtService.generateToken(username);
+
+        String extractedUsername = jwtService.extractUsername(token);
+
+        assertEquals(username, extractedUsername);
+    }
+
+    @Test
+    @DisplayName("Deve validar token válido")
+    void deveValidarTokenValido() {
+        String username = "admin";
+        String token = jwtService.generateToken(username);
+
+        UserDetails userDetails = new User(username, "password", Collections.emptyList());
+
+        boolean isValid = jwtService.validateToken(token, userDetails);
+
+        assertTrue(isValid);
+    }
+
+    @Test
+    @DisplayName("Deve rejeitar token expirado")
+    void deveRejeitarTokenExpirado() {
+        // Forçar expiração imediata
+        jwtProperties.setExpiration(1); // 1ms
+        jwtService.jwtProperties = jwtProperties;
+
+        String username = "admin";
+        String token = jwtService.generateToken(username);
+
+        try {
+            Thread.sleep(10); // garantir que expire
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        UserDetails userDetails = new User(username, "password", Collections.emptyList());
+        boolean isValid = jwtService.validateToken(token, userDetails);
+
+        assertFalse(isValid);
+    }
+}

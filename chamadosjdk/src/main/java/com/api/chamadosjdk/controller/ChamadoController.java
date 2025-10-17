@@ -2,6 +2,7 @@ package com.api.chamadosjdk.controller;
  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.api.chamadosjdk.Enums.EnumStatusChamado.StatusChamado;
@@ -23,7 +24,9 @@ public class ChamadoController {
         return chamadoService.listarTodos();
     }
     
+    // Adicione esta anotação em todos os métodos que precisam de autenticação 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
     public ResponseEntity<Chamado> buscarChamado(@PathVariable Long id) {
         Optional<Chamado> chamado = chamadoService.buscarPorId(id);
         return chamado.map(ResponseEntity::ok)

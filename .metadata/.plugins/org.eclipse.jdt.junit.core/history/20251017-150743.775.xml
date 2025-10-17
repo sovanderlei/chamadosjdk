@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ChamadoControllerTest" project="chamadosjdk" tests="9" started="9" failures="0" errors="9" ignored="0">
+  <testsuite name="com.api.chamadosjdk.controller.ChamadoControllerTest" time="3.572" displayname="Testes do Controller de Chamados com JWT" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]">
+    <testcase name="deveCriarNovoChamadoComToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="3.347" displayname="Deve criar novo chamado com token JWT" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveCriarNovoChamadoComToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="devePermitirAcessoH2ConsoleSemToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.029" displayname="Deve permitir acesso ao H2 console sem token" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:devePermitirAcessoH2ConsoleSemToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveRetornar401SemToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.026" displayname="Deve retornar 401 sem token JWT" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveRetornar401SemToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveBuscarChamadoPorIdComToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.03" displayname="Deve buscar chamado por ID com token JWT" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveBuscarChamadoPorIdComToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveDeletarChamadoComToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.022" displayname="Deve deletar chamado com token JWT" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveDeletarChamadoComToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveRetornarListaChamadosComToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.027" displayname="Deve retornar lista de chamados com token JWT válido" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveRetornarListaChamadosComToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveAtualizarStatusComToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.02" displayname="Deve atualizar status com token JWT" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveAtualizarStatusComToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="devePermitirAcessoLoginSemToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.025" displayname="Deve permitir acesso ao login sem token" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:devePermitirAcessoLoginSemToken()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveRetornar403ComTokenInvalido" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.036" displayname="Deve retornar 403 com token inválido" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveRetornar403ComTokenInvalido()]">
+      <error>java.lang.IllegalStateException: springSecurityFilterChain cannot be null. Ensure a Bean with the name springSecurityFilterChain implementing Filter is present or inject the Filter to be used.&#13;
+	at org.springframework.util.Assert.state(Assert.java:101)&#13;
+	at org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurer.beforeMockMvcCreated(SecurityMockMvcConfigurer.java:76)&#13;
+	at org.springframework.test.web.servlet.setup.AbstractMockMvcBuilder.build(AbstractMockMvcBuilder.java:176)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.setUp(ChamadoControllerTest.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

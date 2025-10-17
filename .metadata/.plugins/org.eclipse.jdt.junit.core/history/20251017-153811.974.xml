@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ChamadoControllerTest" project="chamadosjdk" tests="7" started="7" failures="0" errors="3" ignored="0">
+  <testsuite name="com.api.chamadosjdk.controller.ChamadoControllerTest" time="4.376" displayname="Testes do Controller de Chamados (Mockito Puro)" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]">
+    <testcase name="devePermitirAcessoH2ConsoleSemToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="3.56" displayname="Deve permitir acesso ao H2 console sem token" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:devePermitirAcessoH2ConsoleSemToken()]"/>
+    <testcase name="deveRetornarListaChamados" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.519" displayname="Deve retornar lista de chamados" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveRetornarListaChamados()]"/>
+    <testcase name="deveCriarNovoChamado" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.139" displayname="Deve criar novo chamado" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveCriarNovoChamado()]"/>
+    <testcase name="deveDeletarChamado" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.078" displayname="Deve deletar chamado" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveDeletarChamado()]">
+      <error>jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.doDelete(FrameworkServlet.java:936)&#13;
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:553)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)&#13;
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)&#13;
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)&#13;
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:165)&#13;
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132)&#13;
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:201)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.deveDeletarChamado(ChamadoControllerTest.java:139)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+Caused by: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.updateNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:186)&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.getNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:161)&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:107)&#13;
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:227)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:181)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)&#13;
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)&#13;
+	... 12 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="deveBuscarChamadoPorId" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.023" displayname="Deve buscar chamado por ID" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveBuscarChamadoPorId()]">
+      <error>jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)&#13;
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)&#13;
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)&#13;
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)&#13;
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:165)&#13;
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132)&#13;
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:201)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.deveBuscarChamadoPorId(ChamadoControllerTest.java:108)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+Caused by: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.updateNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:186)&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.getNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:161)&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:107)&#13;
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:227)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:181)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)&#13;
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)&#13;
+	... 12 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="devePermitirAcessoLoginSemToken" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.013" displayname="Deve permitir acesso ao login sem token" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:devePermitirAcessoLoginSemToken()]"/>
+    <testcase name="deveAtualizarStatus" classname="com.api.chamadosjdk.controller.ChamadoControllerTest" time="0.037" displayname="Deve atualizar status" uniqueid="[engine:junit-jupiter]/[class:com.api.chamadosjdk.controller.ChamadoControllerTest]/[method:deveAtualizarStatus()]">
+      <error>jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:925)&#13;
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:550)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)&#13;
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)&#13;
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)&#13;
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:165)&#13;
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132)&#13;
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:201)&#13;
+	at com.api.chamadosjdk.controller.ChamadoControllerTest.deveAtualizarStatus(ChamadoControllerTest.java:125)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+Caused by: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.updateNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:186)&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.getNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:161)&#13;
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:107)&#13;
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:227)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:181)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)&#13;
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)&#13;
+	... 12 more&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

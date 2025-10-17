@@ -1,0 +1,79 @@
+package com.api.chamadosjdk.controller;
+
+import com.api.chamadosjdk.model.Chamado;
+import com.api.chamadosjdk.service.ChamadoService;
+import com.api.chamadosjdk.service.CustomUserDetailsService;
+import com.api.chamadosjdk.service.JwtService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(ChamadoController.class)
+@Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtProperties.class})
+class ChamadoControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private ChamadoService chamadoService;
+
+    @MockBean
+    private JwtService jwtService;
+
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService; // necessário para o filtro JWT
+
+    private ObjectMapper objectMapper;
+    private String validToken;
+
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        // Token JWT válido para "admin", com expiração futura
+        validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                     "eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYxNjIzOTAyMiwiZXhwIjoxNjE2MzI1NDIyfQ." +
+                     "dummy-signature-for-testing";
+
+        // Simule a validação do token
+        when(jwtService.extractUsername(validToken)).thenReturn("admin");
+        when(jwtService.validateToken(validToken, any())).thenReturn(true);
+    }
+
+    private org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder withToken(
+            org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder builder) {
+        return builder.header("Authorization", "Bearer " + validToken);
+    }
+
+    @Test
+    @DisplayName("Deve retornar lista de chamados com token JWT válido")
+    void deveRetornarListaChamadosComToken() throws Exception {
+        mockMvc.perform(withToken(get("/api/chamados")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Deve retornar 401 sem token JWT")
+    void deveRetornar401SemToken() throws Exception {
+        mockMvc.perform(get("/api/chamados"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    // Demais testes com `withToken(...)` aqui...
+}

@@ -1,0 +1,218 @@
+package com.api.chamadosjdk.controller;
+
+import com.api.chamadosjdk.model.Chamado;
+import com.api.chamadosjdk.service.ChamadoService;
+import com.api.chamadosjdk.service.JwtService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension; 
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.time.LocalDateTime; 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("Testes do Controller de Chamados com JWT")
+class ChamadoControllerTest {
+    
+    private MockMvc mockMvc;
+    
+    @Mock
+    private ChamadoService chamadoService;
+    
+    @InjectMocks
+    private ChamadoController chamadoController;
+    
+    @Mock
+    private JwtService jwtService;
+    
+    private ObjectMapper objectMapper;
+    private String validToken;
+    
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        
+        // Gerar um token válido para testes
+        validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                     "eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYxNjIzOTAyMiwiZXhwIjoxNjE2MzI1NDIyfQ." +
+                     "dummy-signature-for-testing";
+        
+        // Configurar segurança para testes
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(chamadoController)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
+    }
+    
+    // Método auxiliar para adicionar token JWT nas requisições
+    private org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder withToken(
+            org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder builder) {
+        return builder.header("Authorization", "Bearer " + validToken);
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve retornar lista de chamados com token JWT válido")
+    void deveRetornarListaChamadosComToken() throws Exception {
+        // Arrange
+        Chamado chamado1 = new Chamado("Chamado 1", "Descrição 1", "Usuario 1");
+        chamado1.setId(1L);
+        Chamado chamado2 = new Chamado("Chamado 2", "Descrição 2", "Usuario 2");
+        chamado2.setId(2L);
+        
+        List<Chamado> chamados = Arrays.asList(chamado1, chamado2);
+        when(chamadoService.listarTodos()).thenReturn(chamados);
+        
+        // Act & Assert com token JWT
+        mockMvc.perform(withToken(get("/api/chamados")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].titulo", is("Chamado 1")))
+                .andExpect(jsonPath("$[1].id", is(2)))
+                .andExpect(jsonPath("$[1].titulo", is("Chamado 2")));
+        
+        verify(chamadoService, times(1)).listarTodos();
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve criar novo chamado com token JWT")
+    void deveCriarNovoChamadoComToken() throws Exception {
+        // Arrange
+        Chamado chamado = new Chamado("Novo Chamado", "Descrição do novo chamado", "Novo Usuario");
+        Chamado chamadoSalvo = new Chamado("Novo Chamado", "Descrição do novo chamado", "Novo Usuario");
+        chamadoSalvo.setId(10L);  
+        chamadoSalvo.setDataAbertura(LocalDateTime.now());
+        
+        when(chamadoService.abrirChamado(any(Chamado.class))).thenReturn(chamadoSalvo);
+        
+        // Act & Assert com token JWT
+        mockMvc.perform(withToken(post("/api/chamados")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(chamado))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(10)))
+                .andExpect(jsonPath("$.titulo", is("Novo Chamado")));
+        
+        verify(chamadoService, times(1)).abrirChamado(any(Chamado.class));
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve retornar 401 sem token JWT")
+    void deveRetornar401SemToken() throws Exception {
+        // Act & Assert SEM token (deve retornar 401 Unauthorized)
+        mockMvc.perform(get("/api/chamados")) // Sem header Authorization
+                .andExpect(status().isUnauthorized());
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve retornar 403 com token inválido")
+    void deveRetornar403ComTokenInvalido() throws Exception {
+        // Act & Assert com token inválido
+        mockMvc.perform(get("/api/chamados")
+                .header("Authorization", "Bearer token-invalido"))
+                .andExpect(status().isForbidden());
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve buscar chamado por ID com token JWT")
+    void deveBuscarChamadoPorIdComToken() throws Exception {
+        // Arrange
+        Long id = 1L;
+        Chamado chamado = new Chamado("Chamado Teste", "Descrição Teste", "Test User");
+        chamado.setId(id);
+        
+        when(chamadoService.buscarPorId(id)).thenReturn(Optional.of(chamado));
+        
+        // Act & Assert com token JWT
+        mockMvc.perform(withToken(get("/api/chamados/{id}", id)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.titulo", is("Chamado Teste")));
+        
+        verify(chamadoService, times(1)).buscarPorId(id);
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve atualizar status com token JWT")
+    void deveAtualizarStatusComToken() throws Exception {
+        // Arrange
+        Long id = 1L;
+        Chamado chamadoAtualizado = new Chamado("Chamado Teste", "Descrição", "Usuario");
+        chamadoAtualizado.setId(id);
+        
+        when(chamadoService.atualizarStatus(eq(id), any())).thenReturn(chamadoAtualizado);
+        
+        // Act & Assert com token JWT
+        mockMvc.perform(withToken(put("/api/chamados/{id}/status", id)
+                .param("status", "EM_ANDAMENTO")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)));
+        
+        verify(chamadoService, times(1)).atualizarStatus(eq(id), any());
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER"})
+    @DisplayName("Deve deletar chamado com token JWT")
+    void deveDeletarChamadoComToken() throws Exception {
+        // Arrange
+        Long id = 1L;
+        when(chamadoService.deletarChamado(id)).thenReturn(true);
+        
+        // Act & Assert com token JWT
+        mockMvc.perform(withToken(delete("/api/chamados/{id}", id)))
+                .andExpect(status().isNoContent());
+        
+        verify(chamadoService, times(1)).deletarChamado(id);
+    }
+    
+    // Teste para endpoints públicos (sem necessidade de token)
+    @Test
+    @DisplayName("Deve permitir acesso ao login sem token")
+    void devePermitirAcessoLoginSemToken() throws Exception {
+        // Note: Não usa @WithMockUser pois é endpoint público
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"admin\",\"password\":\"password\"}"))
+                .andExpect(status().isOk()); // Ou o status que seu endpoint retorna
+    }
+    
+    @Test
+    @DisplayName("Deve permitir acesso ao H2 console sem token")
+    void devePermitirAcessoH2ConsoleSemToken() throws Exception {
+        // Note: Não usa @WithMockUser pois é endpoint público
+        mockMvc.perform(get("/h2-console"))
+                .andExpect(status().isOk()); // Ou o status que for retornado
+    }
+}
