@@ -58,7 +58,7 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve retornar lista de chamados")
     void deveRetornarListaChamados() throws Exception {
- 
+        // Arrange
         Chamado chamado1 = new Chamado("Chamado 1", "Descrição 1", "Usuario 1");
         chamado1.setId(1L);
         Chamado chamado2 = new Chamado("Chamado 2", "Descrição 2", "Usuario 2");
@@ -66,7 +66,8 @@ class ChamadoControllerTest {
         
         List<Chamado> chamados = Arrays.asList(chamado1, chamado2);
         when(chamadoService.listarTodos()).thenReturn(chamados);
- 
+        
+        // Act & Assert
         mockMvc.perform(get("/api/chamados"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -81,13 +82,14 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve retornar chamado por ID existente")
     void deveRetornarChamadoPorIdExistente() throws Exception {
- 
+        // Arrange
         Long id = 1L;
         Chamado chamado = new Chamado("Chamado Teste", "Descrição Teste", "Test User");
         chamado.setId(id);
         
         when(chamadoService.buscarPorId(id)).thenReturn(Optional.of(chamado));
- 
+        
+        // Act & Assert
         mockMvc.perform(get("/api/chamados/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
@@ -100,11 +102,11 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve retornar 404 para chamado não encontrado")
     void deveRetornar404ParaChamadoNaoEncontrado() throws Exception {
- 
+        // Arrange
         Long id = 999L;
         when(chamadoService.buscarPorId(id)).thenReturn(Optional.empty());
         
- 
+        // Act & Assert
         mockMvc.perform(get("/api/chamados/{id}", id))
                 .andExpect(status().isNotFound());
         
@@ -114,7 +116,7 @@ class ChamadoControllerTest {
     @Test 
     @DisplayName("Deve criar novo chamado com sucesso")
     void deveCriarNovoChamado() throws Exception {
- 
+        // Arrange
         Chamado chamado = new Chamado("Novo Chamado", "Descrição do novo chamado", "Novo Usuario");
         Chamado chamadoSalvo = new Chamado("Novo Chamado", "Descrição do novo chamado", "Novo Usuario");
         chamadoSalvo.setId(10L);  
@@ -125,7 +127,7 @@ class ChamadoControllerTest {
         
         when(chamadoService.abrirChamado(any(Chamado.class))).thenReturn(chamadoSalvo);
         
- 
+        // Act & Assert
         System.out.println("=== EXECUTANDO REQUISIÇÃO MOCK ===");
         
         mockMvc.perform(post("/api/chamados")
@@ -150,7 +152,7 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve atualizar status do chamado com sucesso")
     void deveAtualizarStatusChamado() throws Exception {
- 
+        // Arrange
         Long id = 1L;
         Chamado chamadoAtualizado = new Chamado("Chamado Teste", "Descrição", "Usuario");
         chamadoAtualizado.setId(id);
@@ -158,7 +160,7 @@ class ChamadoControllerTest {
         when(chamadoService.atualizarStatus(eq(id), any()))
                 .thenReturn(chamadoAtualizado);
         
- 
+        // Act & Assert
         mockMvc.perform(put("/api/chamados/{id}/status", id)
                 .param("status", "EM_ANDAMENTO"))
                 .andExpect(status().isOk())
@@ -170,12 +172,12 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve retornar 404 ao tentar atualizar status de chamado inexistente")
     void deveRetornar404AoAtualizarStatusChamadoInexistente() throws Exception {
-      
+        // Arrange
         Long id = 999L;
         when(chamadoService.atualizarStatus(eq(id), any()))
                 .thenReturn(null);
         
-    
+        // Act & Assert
         mockMvc.perform(put("/api/chamados/{id}/status", id)
                 .param("status", "EM_ANDAMENTO"))
                 .andExpect(status().isNotFound());
@@ -186,11 +188,11 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve deletar chamado existente")
     void deveDeletarChamadoExistente() throws Exception {
- 
+        // Arrange
         Long id = 1L;
         when(chamadoService.deletarChamado(id)).thenReturn(true);
         
- 
+        // Act & Assert
         mockMvc.perform(delete("/api/chamados/{id}", id))
                 .andExpect(status().isNoContent());
         
@@ -200,11 +202,11 @@ class ChamadoControllerTest {
     @Test
     @DisplayName("Deve retornar 404 ao tentar deletar chamado inexistente")
     void deveRetornar404AoDeletarChamadoInexistente() throws Exception {
- 
+        // Arrange
         Long id = 999L;
         when(chamadoService.deletarChamado(id)).thenReturn(false);
         
- 
+        // Act & Assert
         mockMvc.perform(delete("/api/chamados/{id}", id))
                 .andExpect(status().isNotFound());
         
