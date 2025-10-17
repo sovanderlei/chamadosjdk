@@ -7,4 +7,9 @@
     <fullyQualifiedTypeName name="com.api.chamadosjdk.repository.StatusChamado.EnumStatusChamado"/>
     <fullyQualifiedTypeName name="com.api.chamadosjdk.Enums.EnumStatusChamado.StatusChamado"/>
     <fullyQualifiedTypeName name="org.springframework.boot.test.mock.mockito.MockBean"/>
+    <fullyQualifiedTypeName name="org.springframework.security.access.prepost.PreAuthorize"/>
+    <fullyQualifiedTypeName name="com.api.chamadosjdk.config.JwtAuthenticationFilter"/>
+    <fullyQualifiedTypeName name="org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.extension.MediaType"/>
+    <fullyQualifiedTypeName name="org.springframework.http.MediaType"/>
 </qualifiedTypeNameHistroy>
