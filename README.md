@@ -56,20 +56,20 @@ BCrypt - Criptografia de senhas
 🔹 Passo 1: Clonar o Repositório
 - git clone https://github.com/seu-usuario/chamadosjdk.git
 - cd chamadosjdk
-  
+
 🔹 Passo 2: Compilar e Executar 
-# Compilar o projeto
+Compilar o projeto
 - mvn clean compile
-# Executar a aplicação
+Executar a aplicação
 - mvn spring-boot:run
 
 🔹 Passo 3: Executar os Testes 
-# Executar todos os testes
+Executar todos os testes
 - mvn test
-# Executar testes específicos
+Executar testes específicos
 - mvn test -Dtest=ChamadoServiceTest
 - mvn test -Dtest=ChamadoControllerTest
-# Executar com relatório detalhado
+Executar com relatório detalhado
 - mvn test -Dtest=ChamadoServiceTest#deveAbrirChamadoComSucesso
 
 🔹 Passo 4: Testar a API
@@ -112,17 +112,17 @@ curl -X DELETE http://localhost:8080/api/chamados/1 \
 
 ##  Estrutura de Testes
 
-# Testes de Service (ChamadoServiceTest)
+🔹 Testes de Service (ChamadoServiceTest)
 - Testes unitários puros com Mockito
 - Isolamento completo do banco de dados
 - Verificação de comportamentos com verify()
 
-# Testes de Controller (ChamadoControllerTest)
+🔹 Testes de Controller (ChamadoControllerTest)
 - Testes de endpoints REST com MockMvc
 - Validação de status HTTP e respostas JSON
 - Configuração manual sem contexto Spring
 
-# Casos de Teste Implementados
+🔹 Casos de Teste Implementados
 - Cenário      Método                                     Descrição
 - Criação      deveAbrirChamadoComSucesso                 Cria chamado com ID 10
 - Listagem     deveListarTodosChamados                    Retorna lista de chamados
@@ -132,19 +132,19 @@ curl -X DELETE http://localhost:8080/api/chamados/1 \
 - Exclusão     deveDeletarChamadoExistente                Remove chamado com sucesso
 
 ##  Resultados dos Testes
-Cobertura
+🔹 Cobertura
  -  Service Layer: 100% dos métodos principais
  -  Controller Layer: Todos endpoints REST
  -  Business Logic: Regras de negócio validadas
  -  Error Handling: Cenários de erro cobertos
 
-# Padrões de Teste
+🔹 Padrões de Teste
 - Arrange-Act-Assert (AAA)
 - Behavior Verification
 - Exception Testing
 - Independent Tests
 
-##  Configurações
+🔹 Configurações
 - Banco de Dados H2
     URL: http://localhost:8080/h2-console
     JDBC URL: jdbc:h2:mem:chamadosdb
