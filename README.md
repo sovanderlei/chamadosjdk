@@ -161,64 +161,64 @@ Substitua SEU_TOKEN_JWT pelo token retornado no passo de autenticação.
 ```
 
 🧪 Estrutura de Testes
-Testes de Service (ChamadoServiceTest)
-Testes unitários puros com Mockito
-Isolamento completo do banco de dados
-Verificação de comportamentos com verify()
-Testes de Controller (ChamadoControllerTest)
-Testes de endpoints REST com MockMvc
-Validação de status HTTP e respostas JSON
-Configuração manual com standaloneSetup (sem contexto Spring completo)
-Casos de Teste Implementados
-Criação
-deveAbrirChamadoComSucesso
-Cria chamado com ID 10
-Listagem
-deveListarTodosChamados
-Retorna lista de chamados
-Busca
-deveBuscarChamadoPorIdExistente
-Busca por ID válido
-Erro 404
-deveRetornar404ParaChamadoNaoEncontrado
-ID inexistente
-Atualização
-deveAtualizarStatusChamado
-Altera status do chamado
-Exclusão
-deveDeletarChamadoExistente
-Remove chamado com sucesso
+- Testes de Service (ChamadoServiceTest)
+- Testes unitários puros com Mockito
+- Isolamento completo do banco de dados
+- Verificação de comportamentos com verify()
+- Testes de Controller (ChamadoControllerTest)
+- Testes de endpoints REST com MockMvc
+- Validação de status HTTP e respostas JSON
+- Configuração manual com standaloneSetup (sem contexto Spring completo)
+- Casos de Teste Implementados
+- Criação
+- deveAbrirChamadoComSucesso
+- Cria chamado com ID 10
+- Listagem
+- deveListarTodosChamados
+- Retorna lista de chamados
+- Busca
+- deveBuscarChamadoPorIdExistente
+- Busca por ID válido
+- Erro 404
+- deveRetornar404ParaChamadoNaoEncontrado
+- ID inexistente
+- Atualização
+- deveAtualizarStatusChamado
+- Altera status do chamado
+- Exclusão
+- deveDeletarChamadoExistente
+- Remove chamado com sucesso
 
 📊 Resultados dos Testes
-✅ Service Layer: 100% dos métodos principais
-✅ Controller Layer: Todos endpoints REST cobertos
-✅ Business Logic: Regras de negócio validadas
-✅ Error Handling: Cenários de erro cobertos
+- Service Layer: 100% dos métodos principais
+- Controller Layer: Todos endpoints REST cobertos
+- Business Logic: Regras de negócio validadas
+- Error Handling: Cenários de erro cobertos
 
 Padrões de Teste
-Arrange-Act-Assert (AAA)
-Behavior Verification
-Exception Testing
-Independent Tests
+- Arrange-Act-Assert (AAA)
+- Behavior Verification
+- Exception Testing
+- Independent Tests
 
 🔧 Configurações
-Banco de Dados H2
-Console: http://localhost:8081/h2-console
-JDBC URL: jdbc:h2:mem:testdb
-Usuário: sa
-Senha: (vazia)
-JWT Configuration
-Secret: mySecretKey12345678901234567890123456789012
-Expiration: 86400000 (24 horas)
+- Banco de Dados H2
+- Console: http://localhost:8081/h2-console
+- JDBC URL: jdbc:h2:mem:testdb
+- Usuário: sa
+- Senha: (vazia)
+- JWT Configuration
+- Secret: mySecretKey12345678901234567890123456789012
+- Expiration: 86400000 (24 horas)
 
 🎯 Funcionalidades Principais
-✅ CRUD completo de chamados
-✅ Autenticação JWT
-✅ Testes unitários com JUnit 5 e Mockito
-✅ Validações de entrada
-✅ Tratamento de erros
-✅ Documentação de API via exemplos
-✅ Configuração para desenvolvimento e testes
+- CRUD completo de chamados
+- Autenticação JWT
+- Testes unitários com JUnit 5 e Mockito
+- Validações de entrada
+- Tratamento de erros
+- Documentação de API via exemplos
+- Configuração para desenvolvimento e testes
 
 📁 Estrutura do Projeto
 
