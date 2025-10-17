@@ -56,11 +56,7 @@ BCrypt - Criptografia de senhas
 🔹 Passo 1: Clonar o Repositório
 - git clone https://github.com/seu-usuario/chamadosjdk.git
 - cd chamadosjdk
-
-🔹 Passo 1: Clonar o Repositório 
-- git clone https://github.com/seu-usuario/chamadosjdk.git
-- cd chamadosjdk
-
+  
 🔹 Passo 2: Compilar e Executar 
 # Compilar o projeto
 - mvn clean compile
