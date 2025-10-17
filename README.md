@@ -1,7 +1,7 @@
 #  Sistema de Gerenciamento de Chamados
 
 ## 📝 Descrição
-Este projeto implementa um sistema completo de abertura e gestão de chamados técnicos desenvolvido em Spring Boot com testes robustos utilizando JUnit 5 e Mockito. O sistema oferece uma API RESTful para criação, consulta, atualização e exclusão de chamados, com autenticação JWT e cobertura completa de testes unitários.
+Sistema de abertura e gestão de chamados técnicos desenvolvido em Spring Boot com testes robustos utilizando JUnit 5 e Mockito. O sistema oferece uma API RESTful para criação, consulta, atualização e exclusão de chamados, com autenticação JWT e cobertura completa de testes unitários.
 
 ##  Arquitetura do Projeto
 O projeto segue uma arquitetura em camadas com separação clara de responsabilidades e foco em testabilidade:
